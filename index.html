@@ -121,13 +121,13 @@
 
     <form id="contactForm">
       <label>姓名：</label>
-      <input id="name" required />
+      <input id="username" required />
 
       <label>Email：</label>
       <input id="email" type="email" required />
 
       <label>想說的話：</label>
-      <textarea id="content" required></textarea>
+      <textarea id="message" required></textarea>
 
       <!-- ✅ 按鈕一定要在 form 裡 -->
       <button type="submit">送出</button>
@@ -153,9 +153,9 @@
 
     // ① 先抓 DOM（一定要在最上面）
     const form = document.getElementById("contactForm");
-    const nameInput = document.getElementById("name");
+    const nameInput = document.getElementById("username");
     const emailInput = document.getElementById("email");
-    const messageInput = document.getElementById("content");
+    const messageInput = document.getElementById("message");
 
     // ② 再綁事件
     form.addEventListener("submit", async (e) => {
@@ -172,7 +172,7 @@
             {
               username: nameInput.value,
               email: emailInput.value,
-              content: messageInput.value
+              message: messageInput.value
             }
           ])
 
