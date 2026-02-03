@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>新手網站</title>
+</head>
+
+<body>
+
+    <h1>資料填寫表單</h1>
+
+    <form id="myForm">
+        <p>
+            姓名：<br>
+            <input type="text" name="username" required>
+        </p>
+
+        <p>
+            Email：<br>
+            <input type="email" name="email" required>
+        </p>
+
+        <p>
+            想說的話：<br>
+            <textarea name="message" required></textarea>
+        </p>
+
+        <p>
+            <button type="submit" id="submitBtn">送出</button>
+        </p>
+    </form>
+    <p id="status"></p>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const supabaseUrl = 'https://tnfdsdiwkwummakftsnc.supabase.co'
+  const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRuZmRzZGl3a3d1bW1ha2Z0c25jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAwMTU2MDIsImV4cCI6MjA4NTU5MTYwMn0.SsM-AoZ0Sy-KOus_69shnZIKM3OJuHHwdRwo3yDcaKo'
+  const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey)
+
+  const form = document.getElementById('myForm')
+  const submitBtn = document.getElementById('submitBtn')
+  const status = document.getElementById('status')
+
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault()
+
+    // 🔒 鎖按鈕，避免連點
+    submitBtn.disabled = true
+    submitBtn.textContent = '送出中…'
+    status.textContent = ''
+
+    const username = form.username.value.trim()
+    const email = form.email.value.trim()
+    const message = form.message.value.trim()
+
+    const { error } = await supabaseClient
+      .from('messages')
+      .insert([{ username, email, message }])
+
+    if (error) {
+      status.textContent = '送出失敗，請稍後再試'
+      status.style.color = 'red'
+      submitBtn.disabled = false
+      submitBtn.textContent = '送出'
+    } else {
+      status.textContent = '送出成功，謝謝你的填寫！'
+      status.style.color = 'green'
+      form.reset()
+      submitBtn.disabled = false
+      submitBtn.textContent = '送出'
+    }
+  })
+})
+</script>
+
+</body>
+
+</html>
