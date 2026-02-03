@@ -141,13 +141,14 @@
 
 
   <script>
- 
-    const { createClient } = supabase;
- 
+
 
     const SUPABASE_URL = "https://tnfdsdiwkwummakftsnc.supabase.co";
     const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRuZmRzZGl3a3d1bW1ha2Z0c25jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAwMTU2MDIsImV4cCI6MjA4NTU5MTYwMn0.SsM-AoZ0Sy-KOus_69shnZIKM3OJuHHwdRwo3yDcaKo";
-    const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY);
+    const supabaseClient = supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
     console.log(supabaseClient);
 
     // ① 先抓 DOM（一定要在最上面）
