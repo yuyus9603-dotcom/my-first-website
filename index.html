@@ -166,36 +166,40 @@
       button.disabled = true;
       button.textContent = "送出中...";
 
-      try {
-        const { error } = await supabaseClient
-          .from("messages")
-          .insert([
-            {
-              username: usernameInput.value,
-              email: emailInput.value,
-              message: messageInput.value
-            }
-          ])
-
-
-        if (error) throw error;
-
-      msgBox.textContent = "送出成功，謝謝你！";
-      msgBox.style.color = "green";
-      button.textContent = "已送出";
-      form.reset();
-
-    } catch (err) {
-      console.error(err);
-      msgBox.textContent = "送出失敗，請稍後再試";
-      msgBox.style.color = "red";
-
-    } finally {
-      setTimeout(() => {
-        button.disabled = false;
-        button.textContent = "送出";
-      }, 2000);
+try {
+const { error } = await supabaseClient
+  .from("messages")
+  .insert([
+    {
+      username: usernameInput.value,
+      email: emailInput.value,
+      message: messageInput.value
     }
+  ]);
+
+if (error) throw error;
+
+
+
+  // ✅ 成功時
+  msgBox.textContent = "送出成功，謝謝你！";
+  msgBox.style.color = "green";
+  button.textContent = "已送出";
+  form.reset();
+
+} catch (err) {
+  console.error("catch err:", err);
+
+  msgBox.textContent = "送出失敗，請稍後再試";
+  msgBox.style.color = "red";
+
+} finally {
+  setTimeout(() => {
+    button.disabled = false;
+    button.textContent = "送出";
+  }, 2000);
+}
+
   });
   </script>
 
