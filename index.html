@@ -127,7 +127,7 @@
       <input id="email" type="email" required />
 
       <label>想說的話：</label>
-      <textarea id="message" required></textarea>
+      <textarea id="content" required></textarea>
 
       <!-- ✅ 按鈕一定要在 form 裡 -->
       <button type="submit">送出</button>
@@ -155,7 +155,8 @@
     const form = document.getElementById("contactForm");
     const usernameInput = document.getElementById("username");
     const emailInput = document.getElementById("email");
-    const messageInput = document.getElementById("message");
+    const messageInput = document.getElementById("content");
+    const msgBox = document.getElementById("message");
 
     // ② 再綁事件
     form.addEventListener("submit", async (e) => {
@@ -179,24 +180,23 @@
 
         if (error) throw error;
 
-        document.getElementById("message").textContent =
-          "送出成功，謝謝你！";
-        button.textContent = "已送出";
-        form.reset();
+      msgBox.textContent = "送出成功，謝謝你！";
+      msgBox.style.color = "green";
+      button.textContent = "已送出";
+      form.reset();
 
-      } catch (err) {
-        console.error(err);
-        document.getElementById("message").textContent =
-          "送出失敗，請稍後再試";
-        document.getElementById("message").style.color = "red";
+    } catch (err) {
+      console.error(err);
+      msgBox.textContent = "送出失敗，請稍後再試";
+      msgBox.style.color = "red";
 
-      } finally {
-        setTimeout(() => {
-          button.disabled = false;
-          button.textContent = "送出";
-        }, 2000);
-      }
-    });
+    } finally {
+      setTimeout(() => {
+        button.disabled = false;
+        button.textContent = "送出";
+      }, 2000);
+    }
+  });
   </script>
 
 </body>
