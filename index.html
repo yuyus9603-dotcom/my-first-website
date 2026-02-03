@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <meta charset="UTF-8">
-    <title>新手網站</title>
+  <meta charset="UTF-8">
+  <title>新手網站</title>
 </head>
 <style>
   body {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+      "PingFang TC", "Noto Sans TC", sans-serif;
+    background: radial-gradient(circle at top, #eef2ff, #e5e7eb);
     min-height: 100vh;
     margin: 0;
     display: flex;
@@ -16,134 +18,185 @@
   }
 
   .card {
-    background: #fff;
-    padding: 32px;
+    background: #ffffff;
     width: 100%;
     max-width: 420px;
-    border-radius: 16px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    padding: 36px 32px;
+    border-radius: 20px;
+    box-shadow:
+      0 10px 30px rgba(0, 0, 0, 0.08),
+      0 1px 2px rgba(0, 0, 0, 0.06);
   }
 
   h1 {
-    margin-top: 0;
-    margin-bottom: 24px;
+    margin: 0 0 8px;
+    font-size: 22px;
+    font-weight: 700;
     text-align: center;
+    letter-spacing: 0.5px;
+  }
+
+  .subtitle {
+    text-align: center;
+    font-size: 14px;
+    color: #6b7280;
+    margin-bottom: 28px;
   }
 
   label {
-    display: block;
-    margin-bottom: 6px;
+    font-size: 13px;
     font-weight: 600;
+    color: #374151;
+    margin-bottom: 6px;
+    display: block;
   }
 
-  input, textarea {
+  input,
+  textarea {
     width: 100%;
-    padding: 10px 12px;
+    padding: 12px 14px;
     border-radius: 8px;
-    border: 1px solid #ccc;
+    border: 1px solid #e5e7eb;
     font-size: 14px;
-    margin-bottom: 16px;
+    background: #ffffff;
+    transition: all 0.15s ease;
+    margin-bottom: 18px;
   }
 
-  input:focus, textarea:focus {
+  input::placeholder,
+  textarea::placeholder {
+    color: #9ca3af;
+  }
+
+  input:focus,
+  textarea:focus {
     outline: none;
-    border-color: #4f46e5;
+    background: #fff;
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
   }
 
   button {
     width: 100%;
-    padding: 12px;
+    padding: 14px;
+    border-radius: 12px;
     border: none;
-    border-radius: 8px;
-    background: #4f46e5;
-    color: #fff;
-    font-size: 16px;
+    background: linear-gradient(135deg, #4f46e5, #4338ca);
+    color: #ffffff;
+    font-size: 15px;
     font-weight: 600;
     cursor: pointer;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
   }
 
   button:hover {
-    background: #4338ca;
+    box-shadow: 0 8px 20px rgba(79, 70, 229, 0.35);
+    transform: translateY(-1px);
+  }
+
+  button:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 10px rgba(79, 70, 229, 0.25);
   }
 
   .success {
-    margin-top: 16px;
-    color: green;
+    margin-top: 18px;
+    font-size: 14px;
     text-align: center;
+    color: #16a34a;
+  }
+
+  button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
   }
 </style>
 
+
 <body>
 
-<div class="card">
-  <h1>資料填寫表單</h1>
-  <div id="message" class="success"></div>
-</div>
+  <div class="card">
+    <h1>聯絡我們</h1>
+    <div class="subtitle">有任何想法，歡迎留下訊息</div>
 
-    <form id="myForm">
-        <p>
-            姓名：<br>
-            <input type="text" name="username" required>
-        </p>
+    <form id="contactForm">
+      <label>姓名：</label>
+      <input id="name" required />
 
-        <p>
-            Email：<br>
-            <input type="email" name="email" required>
-        </p>
+      <label>Email：</label>
+      <input id="email" type="email" required />
 
-        <p>
-            想說的話：<br>
-            <textarea name="message" required></textarea>
-        </p>
+      <label>想說的話：</label>
+      <textarea id="content" required></textarea>
 
-        <p>
-            <button type="submit" id="submitBtn">送出</button>
-        </p>
+      <!-- ✅ 按鈕一定要在 form 裡 -->
+      <button type="submit">送出</button>
     </form>
-    <p id="status"></p>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-  const supabaseUrl = 'https://tnfdsdiwkwummakftsnc.supabase.co'
-  const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRuZmRzZGl3a3d1bW1ha2Z0c25jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAwMTU2MDIsImV4cCI6MjA4NTU5MTYwMn0.SsM-AoZ0Sy-KOus_69shnZIKM3OJuHHwdRwo3yDcaKo'
-  const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey)
+    <div id="message" class="success"></div>
+  </div>
 
-  const form = document.getElementById('myForm')
-  const submitBtn = document.getElementById('submitBtn')
-  const status = document.getElementById('status')
+  <p id="status"></p>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  form.addEventListener('submit', async function (e) {
-    e.preventDefault()
 
-    // 🔒 鎖按鈕，避免連點
-    submitBtn.disabled = true
-    submitBtn.textContent = '送出中…'
-    status.textContent = ''
+  <script>
+ 
+    const { createClient } = supabase;
+ 
 
-    const username = form.username.value.trim()
-    const email = form.email.value.trim()
-    const message = form.message.value.trim()
+    const SUPABASE_URL = "https://tnfdsdiwkwummakftsnc.supabase.co";
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRuZmRzZGl3a3d1bW1ha2Z0c25jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAwMTU2MDIsImV4cCI6MjA4NTU5MTYwMn0.SsM-AoZ0Sy-KOus_69shnZIKM3OJuHHwdRwo3yDcaKo";
+    const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY);
+    console.log(supabaseClient);
 
-    const { error } = await supabaseClient
-      .from('messages')
-      .insert([{ username, email, message }])
+    // ① 先抓 DOM（一定要在最上面）
+    const form = document.getElementById("contactForm");
+    const nameInput = document.getElementById("name");
+    const emailInput = document.getElementById("email");
+    const messageInput = document.getElementById("content");
 
-    if (error) {
-      status.textContent = '送出失敗，請稍後再試'
-      status.style.color = 'red'
-      submitBtn.disabled = false
-      submitBtn.textContent = '送出'
-    } else {
-      status.textContent = '送出成功，謝謝你的填寫！'
-      status.style.color = 'green'
-      form.reset()
-      submitBtn.disabled = false
-      submitBtn.textContent = '送出'
-    }
-  })
-})
-</script>
+    // ② 再綁事件
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const button = form.querySelector("button");
+      button.disabled = true;
+      button.textContent = "送出中...";
+
+      try {
+        const { error } = await supabaseClient
+          .from("messages")
+          .insert([
+            {
+              name: nameInput.value,
+              email: emailInput.value,
+              message: messageInput.value
+            }
+          ]);
+
+
+        if (error) throw error;
+
+        document.getElementById("message").textContent =
+          "送出成功，謝謝你！";
+        button.textContent = "已送出";
+        form.reset();
+
+      } catch (err) {
+        console.error(err);
+        document.getElementById("message").textContent =
+          "送出失敗，請稍後再試";
+        document.getElementById("message").style.color = "red";
+
+      } finally {
+        setTimeout(() => {
+          button.disabled = false;
+          button.textContent = "送出";
+        }, 2000);
+      }
+    });
+  </script>
 
 </body>
 
