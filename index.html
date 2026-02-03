@@ -170,11 +170,11 @@
           .from("messages")
           .insert([
             {
-              name: nameInput.value,
+              username: nameInput.value,
               email: emailInput.value,
-              message: messageInput.value
+              content: messageInput.value
             }
-          ]);
+          ])
 
 
         if (error) throw error;
